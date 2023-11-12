@@ -22,7 +22,7 @@
                 <div class="container-text-h2">
                     <h2 class="text-h2">A <span>melhor</span> rede de livros <br> online do mundo!</h2>
                     <div class="container-button">
-                        <button class="button-start">Comece agora!</button>
+                        <a href="pages/register.php"><button class="button-start">Comece agora!</button></a>
                     </div>
                     <div class="container-svg-img-reading">
                         <img src="imgs/svg/reading.svg" alt="">

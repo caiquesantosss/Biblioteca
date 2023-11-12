@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: 0;
+}
+
+body {
+    height: 200vh;
+    display: flex;
+}
+
+
+.nav-header {
+    position: absolute;
+    top: 7%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+  
+    z-index: 5;
+  
+    color: #474bff;
+    background-color: white;
+  
+    font-family: "Raleway", sans-serif;
+  
+    border-radius: 4px;
+    padding: 5px;
+  
+    cursor: pointer;
+  
+    width: 40%;
+  }
+  
+  .nav-header > nav > a{
+    padding-left: 10px;
+  }
+  
+  a {
+    color: #474bff;
+    text-decoration: none;
+    transition: .5 all ease;
+  }
+  
+  a:hover {
+    color: #3d3fa5;
+  }
