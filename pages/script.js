@@ -14,3 +14,5 @@ function VisiblePassword() {
     var senhaInput = document.getElementById('senha');
     senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
 }
+
+

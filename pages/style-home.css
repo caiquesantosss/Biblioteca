@@ -44,3 +44,149 @@ body {
   a:hover {
     color: #3d3fa5;
   }
+
+  .container-bar-search {
+   position: absolute;
+   top: 25%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+
+   background-color: rgb(236, 236, 236);
+
+   width: 50%;
+
+   padding: 10px;
+   padding-left: 5px;
+   border-radius: 20px;
+
+    
+   
+  }
+
+
+.search {
+  background-color: transparent;
+  width: 99%;
+  border: none;
+  outline: none;
+
+  font-family: "Raleway", sans-serif;
+}
+
+/* Estilo básico para o modal */
+#profileModal {
+  width: 80%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Estilo para esconder o modal por padrão */
+#profileModal {
+  display: none;
+}
+
+/* Estilo para o botão de fechar */
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+#profileModal {
+  width: 80%;
+  max-width: 400px;
+  height: 50%;
+  box-sizing: border-box;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  z-index: 1000; /* Z-index alto para garantir que o modal esteja acima de outros elementos */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar o modal */
+}
+
+/* Estilo para esconder o modal por padrão */
+#profileModal {
+ display: block;
+}
+
+/* Estilo para o botão de fechar */
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Estilo para o overlay (fundo escurecido) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo escurecido */
+  z-index: 999; /* Z-index inferior ao modal, mas alto o suficiente para cobrir a página */
+  display: none;
+}
+
+/* Estilo para centralizar conteúdo no meio do overlay */
+.overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+/* Estilo para o botão de fechar no overlay */
+.overlay-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#img_user {
+
+  height: 100px;
+  width: 100px;
+
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog > div {
+  border: 1px solid red;
+  height: 100%;
+}
+
+dialog > input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.coins {
+  position: absolute;
+  top: 25%;
+  left: 14%;
+  transform: translate(-50%, -50%);
+
+  font-family: "Raleway", sans-serif;
+  font-size: 20px;
+}
