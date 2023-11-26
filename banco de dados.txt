@@ -1,0 +1,67 @@
+CREATE DATABASE IF NOT EXISTS biblioteca;
+USE biblioteca;
+
+CREATE TABLE IF NOT EXISTS usuario (
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    nome_usuario VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,  
+    senha VARCHAR(50) NOT NULL,
+    img_url VARCHAR(255) DEFAULT "../imgs/default/default.png",
+    coins INT NOT NULL DEFAULT 3000,
+    nivel INT NOT NULL DEFAULT 0
+);
+
+select * from usuario;
+
+CREATE TABLE IF NOT EXISTS livros (
+    id_livro INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(255) NOT NULL,
+    autores TEXT NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    capa VARCHAR(200) DEFAULT "../imgs/default/sem_capa.jpg",
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categoria(id_categoria)
+);
+
+CREATE TABLE IF NOT EXISTS categoria (
+    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+    nome_categoria VARCHAR(100) DEFAULT "outros",
+    qtd_livros INT
+);
+
+INSERT INTO categoria (nome_categoria, qtd_livros) VALUES
+    ('Ficção Científica e Fantasia', 0),
+    ('Mistério e Suspense', 0),
+    ('Romance Histórico', 0),
+    ('Ciência e Tecnologia', 0),
+    ('Desenvolvimento pessoal', 0),
+    ('Outros', 0);
+
+-- Inserção de Livros
+-- Inserção de Livros
+INSERT INTO livros (titulo, autores, preco, capa, categoria_id) VALUES
+    ('Duna', 'Frank Herbert', 29.99, '../imgs/books/livro_1.jpg', 1),
+    ('A Batalha do Labirinto', 'Rick Riordan', 20.99, '../imgs/books/livro_10.jpg', 1),
+    ('O Código Da Vinci', 'Dan Brown', 24.99, '../imgs/books/livro_11.jpg', 2),
+    ('Os Homens que Não Amavam as Mulheres', 'Stieg Larsson', 26.99, '../imgs/books/livro_12.jpg', 2),
+    ('Sherlock Holmes', 'Arthur Conan Doyle', 18.99, '../imgs/books/livro_13.jpg', 2),
+    ('Harry Potter e a Saga Inteira', 'J.K. Rowling', 99.99, '../imgs/books/livro_25.jpg', 1),
+    ('O Poder do Agora', 'Eckhart Tolle', 21.99, '../imgs/books/livro_18.jpg', 5),  
+    ('Tolkien', 'Autor Desconhecido', 29.99, '../imgs/books/livro_2.jpg', 1),
+    ('O Pintassilgo', 'Donna Tartt', 29.99, '../imgs/books/livro_20.jpg', 1),
+    ('Neuromancer', 'William Gibson', 22.99, '../imgs/books/livro_3.jpg', 1),
+    ('O Guia do Mochileiro das Galáxias', 'Douglas Adams', 19.99, '../imgs/books/livro_4.jpg', 1),
+    ('Cem Anos de Solidão', 'Gabriel García Márquez', 27.99, '../imgs/books/livro_5.jpg', 1),
+    ('A Mão Esquerda da Escuridão', 'Ursula K. Le Guin', 23.99, '../imgs/books/livro_6.jpg', 1),
+    ('Fahrenheit 451', 'Ray Bradbury', 21.99, '../imgs/books/livro_7.jpg', 1),
+    ('Fundação e Império', 'Isaac Asimov', 35.99, '../imgs/books/livro_9.jpg', 1);
+
+
+
+
+
+select * from livros;
+
+
+
+

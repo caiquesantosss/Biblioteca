@@ -15,4 +15,3 @@ function VisiblePassword() {
     senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
 }
 
-

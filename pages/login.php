@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   // Consulta SQL para verificar as credenciais usando instruções preparadas
-  $stmt = $conn->prepare("SELECT id_usuario, nome_usuario, email, img_url, coins FROM usuario WHERE nome_usuario = ? AND senha = ?");
+  $stmt = $conn->prepare("SELECT id_usuario, nome_usuario, email, img_url, coins, nivel FROM usuario WHERE nome_usuario = ? AND senha = ?");
   $stmt->bind_param("ss", $username, $password);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $_SESSION['email'] = $row['email'];
       $_SESSION['imgUrl'] = $row['img_url'];
       $_SESSION['coins'] = $row['coins'];
+      $_SESSION['nivel'] = $row['nivel'];
 
       // Redirecionar para a página principal ou outra página após o login
       header("Location: home.php");
