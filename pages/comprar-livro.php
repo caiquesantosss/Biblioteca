@@ -1,0 +1,105 @@
+<?php
+
+if (isset($_GET['titulo'])) {
+    $titulo = urldecode($_GET['titulo']);
+
+    include_once("config.php");
+
+    $sqlLivro = "SELECT * FROM livros WHERE titulo = ?";
+    $stmtLivro = $conn->prepare($sqlLivro);
+    $stmtLivro->bind_param("s", $titulo);
+    $stmtLivro->execute();
+    $resultLivro = $stmtLivro->get_result();
+
+    // Verifica se o livro foi encontrado
+    if ($resultLivro->num_rows > 0) {
+        $livro = $resultLivro->fetch_assoc();
+
+        $stmtLivro->close();
+
+        $sqlCategoria = "SELECT * FROM categoria WHERE id_categoria = ?";
+        $stmtCategoria = $conn->prepare($sqlCategoria);
+        $stmtCategoria->bind_param("i", $livro['categoria_id']);
+        $stmtCategoria->execute();
+        $resultCategoria = $stmtCategoria->get_result();
+
+        if ($resultCategoria->num_rows > 0) {
+            $categoria = $resultCategoria->fetch_assoc();
+
+            $stmtCategoria->close();
+        } else {
+            $categoria = array('nome_categoria' => 'Categoria Desconhecida');
+        }
+
+        $conn->close();
+    } else {
+
+        header("Location: home.php");
+        exit();
+    }
+} else {
+
+    header("Location: home.php");
+    exit();
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra de Livro</title>
+    <link rel="stylesheet" href="style-home.css">
+    <style>
+        * {
+            font-family: "Raleway", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-text-h2-details">
+        <h2>Detalhes do Livro</h2>
+    </div>
+
+    <div class="container-info-book">
+        <div class="container-info-main">
+            <div class="container-info-img">
+                <img src="<?php echo $livro['capa']; ?>" alt="Capa do Livro">
+            </div>
+            <div class="container-info-propiedades">
+                <p>
+                    <?php echo $livro['titulo']; ?>
+                </p>
+                <p>
+                    <?php echo $livro['autores']; ?>
+                </p>
+                <p>R$
+                    <?php echo number_format($livro['preco'], 2, ',', '.'); ?>
+                </p>
+                <p>
+                    <?php echo $categoria['nome_categoria']; ?>
+                </p>
+
+                <form action="./src/processar_compra_carrinho.php" method="post">
+                    <input type="hidden" name="livro_id" value="<?php echo $livro['id_livro']; ?>">
+                    <button type="submit" class="buy-button" name="buy-the-books">Comprar Agora</button>
+                    <button type="submit" class="buy-button-car" name="add_to_cart">Adicionar ao carrinho</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

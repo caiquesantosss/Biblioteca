@@ -73,12 +73,24 @@ $currentImageUrl = getCurrentImageUrl($conn, $user_id);
 if ($currentImageUrl != $_SESSION['imgUrl']) {
     $_SESSION['imgUrl'] = $currentImageUrl;
 }
+function obterNomeLivro($conn, $idLivro)
+{
+    $sql = "SELECT titulo FROM livros WHERE id_livro = $idLivro";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['titulo'];
+    } else {
+        return '';
+    }
+}
+
 ?>
 
 
 
 
-?>
 
 
 <!DOCTYPE html>
@@ -115,6 +127,7 @@ if ($currentImageUrl != $_SESSION['imgUrl']) {
             <a href="./books.php">Livros</a>
             <a href="#categorias">Categorias</a>
             <a href="./comprar.php">Compre Coins</a>
+            <a href="my-books.php">Seus livros</a>
         </nav>
     </header>
 
@@ -138,12 +151,11 @@ if ($currentImageUrl != $_SESSION['imgUrl']) {
         </div>
     </div>
 
-
     <div class="container-bar-search">
         <form>
             <?php
 
-            $sql = "SELECT titulo FROM livros LIMIT 5";
+            $sql = "SELECT titulo FROM livros";
             $query = $conn->query($sql);
 
             if ($query->num_rows > 0) {
@@ -175,8 +187,11 @@ if ($currentImageUrl != $_SESSION['imgUrl']) {
     <div class="container-books-best-seller">
         <?php
 
+
+
         foreach ($capasLivros as $idLivro => $capaLivro) {
-            echo "<img class='livro-capa' src='$capaLivro' alt='Capa do Livro $numerosAleatorios[$idLivro]'><br>";
+             $nomeLivro = obterNomeLivro($conn, $numerosAleatorios[$idLivro]);
+            echo "<img class='livro-capa' src='$capaLivro' alt='Capa do Livro $numerosAleatorios[$idLivro]' data-nome='$nomeLivro'><br>";
         }
 
         ?>
@@ -224,6 +239,9 @@ if ($currentImageUrl != $_SESSION['imgUrl']) {
 
 
         <button class="logout"><a href="./src/logout.php">Sair</a></button>
+
+       <a href="carrinho.php"><img src="../imgs/icons/carrinho_de_compra" alt="" class="carrinho"></a>
+
         <script>
             var modal = document.getElementById('myModal')
             var imagemModalTrigger = document.getElementById("openModalBtn")
@@ -242,10 +260,15 @@ if ($currentImageUrl != $_SESSION['imgUrl']) {
                     closeModal()
                 }
             })
+
+            document.querySelectorAll('.livro-capa').forEach(function (imagemLivro) {
+            imagemLivro.addEventListener('click', function () {
+                // Obtém o nome do livro do atributo data-nome
+                var nomeLivro = this.getAttribute('data-nome');
+                window.location.href = "comprar-livro.php?titulo=" + nomeLivro
+            });
+        });
+    </script>
         
-            
-
-        </script>
 </body>
-
 </html>

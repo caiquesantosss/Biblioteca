@@ -11,7 +11,7 @@ function CountLetters() {
 
 
 function VisiblePassword() {
-    var senhaInput = document.getElementById('senha');
-    senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
+    var senhaInput = document.getElementById('senha')
+    senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password'
 }
 
