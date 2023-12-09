@@ -83,9 +83,7 @@ CREATE TABLE IF NOT EXISTS compras (
 );
 
 
+INSERT INTO usuario (nome_usuario, email, senha, nivel)
+VALUES ('Admin', 'admin@example.com', 'senha_admin', 1);
 
-select * from carrinho_compras;
-
-select * from compras;
-
-select * from usuario;
+/* Pode utilizar esse insert para ser admin do site! Terá acesso a alguns recursos escondidos que alguns só podem ser acessado pela url! (maioria da pasta src!) */

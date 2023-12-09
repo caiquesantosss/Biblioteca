@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+
+if (!isset($_SESSION['user_id'])) {
+    // Redirecionar para a página de login
+    header("Location: login.php");
+    exit();
+}
 
 if (isset($_GET['titulo'])) {
     $titulo = urldecode($_GET['titulo']);
@@ -62,8 +70,27 @@ if (isset($_GET['titulo'])) {
         }
 
         body {
-            height: 100vh;
+            height: 20vh;
             background-color: #f5f5f5;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            transform: translate(-50%, -50%);
+
+            padding: 5px;
+            padding-inline: 20px;
+            background-color: #474bff;
+            color: white;
+            border: none;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+
         }
     </style>
 </head>
@@ -72,6 +99,7 @@ if (isset($_GET['titulo'])) {
     <div class="container-text-h2-details">
         <h2>Detalhes do Livro</h2>
     </div>
+    <button class="back-button" onclick="goBack()">Voltar</button>
 
     <div class="container-info-book">
         <div class="container-info-main">
@@ -85,21 +113,29 @@ if (isset($_GET['titulo'])) {
                 <p>
                     <?php echo $livro['autores']; ?>
                 </p>
-                <p>R$
-                    <?php echo number_format($livro['preco'], 2, ',', '.'); ?>
+                <p>C:
+                    <?php echo $livro['preco']; ?>
                 </p>
                 <p>
                     <?php echo $categoria['nome_categoria']; ?>
                 </p>
 
-                <form action="./src/processar_compra_carrinho.php" method="post">
+                <form action="./src/processar_compra.php" method="post">
                     <input type="hidden" name="livro_id" value="<?php echo $livro['id_livro']; ?>">
                     <button type="submit" class="buy-button" name="buy-the-books">Comprar Agora</button>
-                    <button type="submit" class="buy-button-car" name="add_to_cart">Adicionar ao carrinho</button>
+                </form>
+
+                <form action="./src/processar_compra_carrinho.php" method="post">
+                    <input type="hidden" name="livro_id" value="<?php echo $livro['id_livro']; ?>">
+                    <button type="submit" class="buy-button-car" name="adicionar">Adicionar ao carrinho</button>
                 </form>
             </div>
         </div>
     </div>
 </body>
-
+<script>
+     function goBack() {
+            window.history.back();
+        }
+</script>
 </html>

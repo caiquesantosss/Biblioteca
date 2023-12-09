@@ -1,8 +1,3 @@
-<?php
-session_start();
-$coins = isset($_SESSION['coins']) ? $_SESSION['coins'] : 0;
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -10,27 +5,130 @@ $coins = isset($_SESSION['coins']) ? $_SESSION['coins'] : 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compra de Coins</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="style-home.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: "Raleway", sans-serif;
+        }
+
+        .logo {
+            background-color: #474bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .coins {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .coin-purchase {
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #474bff;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        button {
+            background-color: #474bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 48%;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        .back-button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h1 span {
+            color: #474bff;
+        }
+
+        .section p {
+            line-height: 1.5;
+        }
+
+        .section-small {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        small {
+            font-size: 12px;
+            color: #777;
+        }
+
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <header class="logo">
         <h2>Livrosia</h2>
     </header>
-    <header class="nav-header">
-        <nav>
-            <a href="./whoweare.php">Quem nós somos?</a>
-            <a href="#livros">Livros</a>
-            <a href="#categorias">Categorias</a>
-            <a href="./comprar.php">Compre Coins</a>
-        </nav>
-    </header>
 
     <main>
         <section class="user-info">
             <p class="coins">Seus coins:
-                <?php echo $coins; ?>
+                <?php 
+                session_start();
+                $coins = isset($_SESSION['coins']) ? $_SESSION['coins'] : 0;
+                echo $coins; ?>
             </p>
         </section>
 
@@ -45,6 +143,8 @@ $coins = isset($_SESSION['coins']) ? $_SESSION['coins'] : 0;
                 <button type="submit" name="comprar_coins" value="1000">Comprar 1000 coins</button>
             </form>
         </section>
+
+        <button class="back-button" onclick="window.history.back()">Voltar</button>
     </main>
 
     <div class="content">
@@ -52,10 +152,8 @@ $coins = isset($_SESSION['coins']) ? $_SESSION['coins'] : 0;
             <h1>Sobre os <span>Coins</span> no Site</h1>
             <p>
                 Bem-vindo aos Coins! No nosso site, os Coins são uma moeda virtual que você pode usar para realizar
-                diversas
-                atividades, como comprar livros exclusivos, acessar conteúdo premium e muito mais.
-                Explore um mundo de possibilidades enquanto acumula Coins em sua conta. Desfrute de benefícios
-                exclusivos,
+                diversas atividades, como comprar livros exclusivos, acessar conteúdo premium e muito mais.
+                Explore um mundo de possibilidades enquanto acumula Coins em sua conta. Desfrute de benefícios exclusivos,
                 incluindo acesso a eventos especiais, descontos em produtos e serviços e a oportunidade de participar de
                 programas de fidelidade emocionantes.
             </p>

@@ -46,6 +46,23 @@
     <style>
         body {
             font-family: "Raleway", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #474bff;
+            margin-top: 20px;
         }
 
         table {
@@ -56,8 +73,14 @@
 
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
+            background-color: #f9f9f9;
+        }
+
+        th {
+            background-color: #474bff;
+            color: white;
         }
 
         .total {
@@ -78,87 +101,103 @@
             color: #c0392b;
         }
 
-        .title-table {
-            text-align: center;
-            color: #474bff;
-        }
-
-        a {
+        .back-btn {
             position: absolute;
-            top: 5%;
-            left: 5%;
-            transform: translate(-50%, -50%);
-
+            top: 20px;
+            left: 20px;
             background-color: #474bff;
             color: white;
-            padding: 5px;
+            padding: 8px 16px;
+            border: none;
             border-radius: 5px;
-            width: 100px;
-            text-align: center;
+            cursor: pointer;
         }
 
+        .back-btn:hover {
+            background-color: #333;
+        }
+
+        .checkout-btn {
+            margin-top: 20px;
+            background-color: #474bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #333;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #4caf50;
+        }
     </style>
 </head>
 <body>
-    <h2 class="title-table">Carrinho do Usuário</h2>
-    <a href="home.php">Voltar</a>
+    <div class="container">
+        <a href="home.php" class="back-btn">Voltar</a>
 
-    <?php
-        if (isset($_GET['compra_sucesso'])) {
-            echo '<p style="color: green;">Compra realizada com sucesso!</p>';
-        } elseif (isset($_GET['coins_insuficientes'])) {
-            echo '<p style="color: red;">Você não possui coins suficientes para realizar a compra.</p>';
-        } elseif (isset($_GET['erro'])) {
-            echo '<p style="color: red;">Erro ao processar a compra. Tente novamente.</p>';
-        }
-    ?>
-    
-    <table>
-        <tr>
-            <th>Título</th>
-            <th>Preço</th>
-            <th>Remover</th>
-        </tr>
+        <?php
+            if (isset($_GET['compra_sucesso'])) {
+                echo '<p class="message">Compra realizada com sucesso!</p>';
+            } elseif (isset($_GET['coins_insuficientes'])) {
+                echo '<p class="message" style="color: red;">Você não possui coins suficientes para realizar a compra.</p>';
+            } elseif (isset($_GET['erro'])) {
+                echo '<p class="message" style="color: red;">Erro ao processar a compra. Tente novamente.</p>';
+            }
+        ?>
 
-        <?php foreach ($itensCarrinho as $item): ?>
+        <h2>Carrinho do Usuário</h2>
+
+        <table>
             <tr>
-                <td><?php echo $item['titulo']; ?></td>
-                <td>R$ <?php echo number_format($item['preco'], 2, ',', '.'); ?></td>
-                <td>
-                    <button class="remove-btn" onclick="removeItem(<?php echo $item['id_carrinho']; ?>, '<?php echo $item['titulo']; ?>')">
-                        &#128465; Remover
-                    </button>
-                </td>
+                <th>Título</th>
+                <th>Preço</th>
+                <th>Remover</th>
             </tr>
-        <?php endforeach; ?>
 
-        <tr class="total">
-            <td>Total</td>
-            <td>R$ <?php echo number_format($somaTotal, 2, ',', '.'); ?></td>
-            <td></td>
-        </tr>
-    </table>
-    <button onclick="processarCompra()">Finalizar Compra</button>
+            <?php foreach ($itensCarrinho as $item): ?>
+                <tr>
+                    <td><?php echo $item['titulo']; ?></td>
+                    <td>R$ <?php echo number_format($item['preco'], 2, ',', '.'); ?></td>
+                    <td>
+                        <button class="remove-btn" onclick="removeItem(<?php echo $item['id_carrinho']; ?>, '<?php echo $item['titulo']; ?>')">
+                            &#128465; Remover
+                        </button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
 
+            <tr class="total">
+                <td>Total</td>
+                <td>R$ <?php echo number_format($somaTotal, 2, ',', '.'); ?></td>
+                <td></td>
+            </tr>
+        </table>
 
+        <button class="checkout-btn" onclick="processarCompra()">Finalizar Compra</button>
+    </div>
 
     <script>
-       function removeItem(idCarrinho) {
-        var confirmation = confirm("Tem certeza que deseja remover este item?");
-        if (confirmation) {
-            // Redirecione para a página de remoção com o ID do carrinho
-            window.location.href = "./src/remover-carrinho.php?id_carrinho=" + idCarrinho;
+        function removeItem(idCarrinho) {
+            var confirmation = confirm("Tem certeza que deseja remover este item?");
+            if (confirmation) {
+                window.location.href = "./src/remover-carrinho.php?id_carrinho=" + idCarrinho;
+            }
         }
-    }
 
-    function processarCompra() {
-        var confirmation = confirm("Tem certeza que deseja realizar a compra?");
-        if (confirmation) {
-            window.location.href = "./src/processar_compra.php";
+        function processarCompra() {
+            var confirmation = confirm("Tem certeza que deseja realizar a compra?");
+            if (confirmation) {
+                window.location.href = "./src/finalizar.php";
+            }
         }
-    }
-
-    
     </script>
 </body>
 </html>

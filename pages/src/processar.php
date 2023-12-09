@@ -2,6 +2,14 @@
 session_start();
 include_once("../config.php");
 
+if (!isset($_SESSION['user_id']) || $_SESSION['nivel'] !== 1) {
+
+    header("Location: ../login.php");
+    exit();
+}
+
+$userId = $_SESSION['user_id'];
+
 // Verificar se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comprar_coins'])) {
     // Obter a quantidade a comprar

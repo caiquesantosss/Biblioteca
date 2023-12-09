@@ -1,70 +1,79 @@
 <?php
 session_start();
 include_once("../config.php");
+if (!isset($_SESSION['user_id']) || $_SESSION['nivel'] !== 1) {
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
-if (isset($_POST['comprar']) && isset($_POST['livro_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $livro_id = $_POST['livro_id'];
+$userId = $_SESSION['user_id'];
+
+if (isset($_SESSION['user_id']) && isset($_POST['livro_id'])) {
+    $id_usuario = $_SESSION['user_id'];
+    $id_livro = $_POST['livro_id'];
 
     // Obter informações do livro
-    $sqlPrecoLivro = "SELECT preco FROM livros WHERE id_livro = ?";
-    $stmtPrecoLivro = $conn->prepare($sqlPrecoLivro);
-    $stmtPrecoLivro->bind_param("i", $livro_id);
-    $stmtPrecoLivro->execute();
-    $resultPrecoLivro = $stmtPrecoLivro->get_result();
+    $sqlLivro = "SELECT * FROM livros WHERE id_livro = ?";
+    $stmtLivro = $conn->prepare($sqlLivro);
+    $stmtLivro->bind_param("i", $id_livro);
+    $stmtLivro->execute();
+    $resultLivro = $stmtLivro->get_result();
 
-    if ($resultPrecoLivro->num_rows > 0) {
-        $livro = $resultPrecoLivro->fetch_assoc();
-        $preco_unitario = $livro['preco'];
+    if ($resultLivro->num_rows > 0) {
+        $livro = $resultLivro->fetch_assoc();
+        $preco_livro = $livro['preco']; // Adiciona esta linha para obter o preço do livro
 
         // Verificar se o usuário tem coins suficientes
-        $sqlUsuarioCoins = "SELECT coins FROM usuario WHERE id_usuario = ?";
-        $stmtUsuarioCoins = $conn->prepare($sqlUsuarioCoins);
-        $stmtUsuarioCoins->bind_param("i", $user_id);
-        $stmtUsuarioCoins->execute();
-        $resultUsuarioCoins = $stmtUsuarioCoins->get_result();
+        $sqlUsuario = "SELECT coins FROM usuario WHERE id_usuario = ?";
+        $stmtUsuario = $conn->prepare($sqlUsuario);
+        $stmtUsuario->bind_param("i", $id_usuario);
+        $stmtUsuario->execute();
+        $resultUsuario = $stmtUsuario->get_result();
 
-        if ($resultUsuarioCoins->num_rows > 0) {
-            $usuario = $resultUsuarioCoins->fetch_assoc();
+        if ($resultUsuario->num_rows > 0) {
+            $usuario = $resultUsuario->fetch_assoc();
             $coins_usuario = $usuario['coins'];
 
-            // Verificar se o usuário tem coins suficientes para a compra
-            if ($coins_usuario >= $preco_unitario) {
-                // Deduzir as coins do usuário
-                $novas_coins = $coins_usuario - $preco_unitario;
+            // Verificar se o usuário tem coins suficientes para comprar o livro
+            if ($coins_usuario >= $preco_livro) {
+                // Deduzir o preço do livro do total de coins do usuário
+                $novas_coins = $coins_usuario - $preco_livro;
+
+                // Atualizar o total de coins do usuário no banco de dados
                 $sqlAtualizarCoins = "UPDATE usuario SET coins = ? WHERE id_usuario = ?";
                 $stmtAtualizarCoins = $conn->prepare($sqlAtualizarCoins);
-                $stmtAtualizarCoins->bind_param("ii", $novas_coins, $user_id);
+                $stmtAtualizarCoins->bind_param("ii", $novas_coins, $id_usuario);
                 $stmtAtualizarCoins->execute();
                 $stmtAtualizarCoins->close();
 
-                // Inserir na tabela de compras
+                // Atualizar a variável de sessão 'coins'
+                $_SESSION['coins'] = $novas_coins; // Adicione esta linha para atualizar a variável de sessão 'coins'
+
+                // Inserir o livro na tabela de compras
                 $sqlInserirCompra = "INSERT INTO compras (id_usuario, id_livro, quantidade, preco_total) VALUES (?, ?, 1, ?)";
                 $stmtInserirCompra = $conn->prepare($sqlInserirCompra);
-                $stmtInserirCompra->bind_param("iid", $user_id, $livro_id, $preco_unitario);
+                $stmtInserirCompra->bind_param("iid", $id_usuario, $id_livro, $preco_livro);
                 $stmtInserirCompra->execute();
                 $stmtInserirCompra->close();
 
-                // Redirecionar para a página de sucesso ou home
-                header("Location: ../compra_sucesso.php");
+                // Redirecionar para a página de compras ou para a página anterior
+                header("Location: ../comprar-livro.php"); // Substitua "compras.php" pela página desejada após a compra
                 exit();
             } else {
                 // Usuário não tem coins suficientes
-                header("Location: ../carrinho.php?coins_insuficientes=1");
-                exit();
+                $_SESSION['error_message'] = "Você não possui coins suficientes para comprar este livro.";
             }
         }
-        $stmtUsuarioCoins->close();
     }
-    $stmtPrecoLivro->close();
+
+    // Redirecionar para a página anterior em caso de erro
+    $redirect_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'home.php';
+    header("Location: $redirect_url");
+    exit();
 }
 
-// Redirecionar para o carrinho se algo der errado
-header("Location: ../carrinho.php?erro=1");
+// Redirecionar para a página inicial se algo der errado
+header("Location: home.php");
 exit();
 ?>

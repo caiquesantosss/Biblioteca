@@ -702,90 +702,79 @@ dialog > input {
   cursor: pointer;
 }
 
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  text-align: right;
+}
+
+.coins {
+  font-size: 18px;
+  margin: 0;
+}
+
 .coin-purchase {
-
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  height: 50%;
-  width: 50%;
-
-
-  text-align: center;
-  font-family: "Raleway", sans-serif;
-
+  margin-top: 20px;
 }
 
-.coin-purchase > form {
-  width: 50%;
-  height: 60%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-  place-items: center; /* Adicione esta linha para centralizar */
+.purchase-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.form_button_coins > button {
-  width: 100px;
-  height: 50%;
-  
-
+.purchase-button {
   background-color: #474bff;
   color: white;
   border: none;
-
-  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
   cursor: pointer;
-
-  transition: 0.2s all ease;
+  width: 48%;
 }
 
-.form_button_coins > button:hover {
-  background-color: #3d3fa5;
+.purchase-button:hover {
+  background-color: #333;
 }
 
 .content {
-  height: 70%;
-  width: 90%;
-  position: absolute;
-  top: 120%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "Raleway", sans-serif;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .section {
   margin-bottom: 20px;
 }
 
-.section > h1, h2 {
-  text-align: center;
-  padding: 20px;
-}
-
-.section > h1 > span {
+.section h1 span {
   color: #474bff;
 }
 
-.section > p {
-  padding: 10px;
+.section p {
+  line-height: 1.5;
 }
 
-small {
+.section-small {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.small-text {
   font-size: 12px;
   color: #777;
-
-  text-align: center;
 }
 
-.section-small  {
-
-  width: 100%;
+@media (max-width: 600px) {
+  .purchase-button {
+      width: 100%;
+  }
 }
-

@@ -1,7 +1,14 @@
 <?php
 session_start();
-include_once("config.php");
 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+
+
+include_once("config.php");
 
 
 $user_id = $_SESSION['user_id'];
@@ -125,9 +132,8 @@ function obterNomeLivro($conn, $idLivro)
         <nav>
             <a href="./whoweare.php">Quem nós somos?</a>
             <a href="./books.php">Livros</a>
-            <a href="#categorias">Categorias</a>
             <a href="./comprar.php">Compre Coins</a>
-            <a href="my-books.php">Seus livros</a>
+            <a href="my-books.php">Meus livros</a>
         </nav>
     </header>
 
@@ -152,7 +158,7 @@ function obterNomeLivro($conn, $idLivro)
     </div>
 
     <div class="container-bar-search">
-        <form>
+        <form  onsubmit="return redirectToSearchResults()">
             <?php
 
             $sql = "SELECT titulo FROM livros";
@@ -264,10 +270,20 @@ function obterNomeLivro($conn, $idLivro)
             document.querySelectorAll('.livro-capa').forEach(function (imagemLivro) {
             imagemLivro.addEventListener('click', function () {
                 // Obtém o nome do livro do atributo data-nome
-                var nomeLivro = this.getAttribute('data-nome');
+                var nomeLivro = this.getAttribute('data-nome')
                 window.location.href = "comprar-livro.php?titulo=" + nomeLivro
-            });
-        });
+            })
+        })
+
+         function redirectToSearchResults() {
+
+            var searchTerm = document.getElementById('search').value
+
+            if (searchTerm.trim() !== '') {
+                window.location.href = './src/search.php?search=' + encodeURIComponent(searchTerm)
+            }
+            return false;
+        }
     </script>
         
 </body>

@@ -1,5 +1,14 @@
 <?php
 
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['nivel'] !== 1) {
+
+    header("Location: login.php");
+    exit();
+}
+
+$userId = $_SESSION['user_id'];
+
 include_once("config.php");
 
 
@@ -59,40 +68,96 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todos os Registros</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+
+
         }
 
         th,
         td {
             border: 1px solid #dddddd;
             text-align: left;
-            padding: 8px;
+            padding: 12px;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #474bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            margin: 20px 0;
+            background-color: #474bff;
+
+            padding: 5px;
+            padding-inline: 10px;
+            border-radius: 5px;
+            color: white;
+
+            transition: 0.5s all ease;
+        }
+
+        a:hover {
+            color: #474bff;
+            background-color: #f4f4f4;
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #474bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 4px;
+        }
+
+        button:hover {
+            background-color: #333;
         }
     </style>
 </head>
 
 <body>
-   
-<a href="src/adicionar_usuario.html">Adicionar</a>
+    <a href="src/adicionar_usuario.php">Adicionar</a>
+
 </body>
+
 <script>
-        function atualizar(id) {
-            window.location = 'src/atulizar_dados.php?id=' + id
-        }
-
-        function remover(id) {
-        if (confirm('Tem certeza que deseja remover este registro?')) {
-            window.location.href = 'src/remover_dados.php?id=' + id
-        }
-
-     
+    function atualizar(id) {
+        window.location = 'src/atualizar_dados.php?id=' + id;
     }
 
-    </script>
+    function remover(id) {
+        if (confirm('Tem certeza que deseja remover este registro?')) {
+            window.location.href = 'src/remover_dados.php?id=' + id;
+        }
+    }
+</script>
+
 </html>

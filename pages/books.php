@@ -50,6 +50,9 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="style-home.css">
     <link rel="stylesheet" href="../style.css">
     <style>
+        * {
+            font-family: "Raleway", sans-serif;
+        }        
          img {
             max-width: 100px;
             max-height: 140px;
@@ -64,9 +67,9 @@ if (isset($_SESSION['user_id'])) {
     </header>
     <header class="nav-header">
         <a href="./home.php">Início</a>
-        <a href="#livros">Livros</a>
-        <a href="#categorias">Categorias</a>
-        <a href="#compre-coins">Compre Coins</a>
+        <a href="./whoweare.php">Quem nós somos?</a>
+        <a href="comprar.php">Compre Coins</a>
+        <a href="my-books.php">Meus Livros</a>
     </header>
 
     <?php
@@ -82,7 +85,7 @@ if (isset($_SESSION['user_id'])) {
         echo "<div class='livro' data-titulo='{$row['titulo']}' data-preco='{$row['preco']}'>";
         echo "<img src='" . $row['capa'] . "' alt='Capa do Livro'>";
         echo "<h3>" . $row['titulo'] . "</h3>";
-        echo "<p>Preço: R$ " . number_format($row['preco'], 2, ',', '.') . "</p>";
+        echo "<p>Preço: <br> " . $row['preco'] . " Coins</p>";
         echo "</div>";
     }
     ?>

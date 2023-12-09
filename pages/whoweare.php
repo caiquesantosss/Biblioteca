@@ -30,9 +30,9 @@
     </header>
     <header class="nav-header">
         <a href="./home.php">Início</a>
-        <a href="#livros">Livros</a>
-        <a href="#categorias">Categorias</a>
-        <a href="#compre-coins">Compre Coins</a>
+        <a href="books.php">Livros</a>
+        <a href="comprar.php">Compre Coins</a>
+        <a href="my-books.php">Meu livros</a>
     </header>
 
     <div class="container-text-teste">
@@ -49,8 +49,6 @@
             allowfullscreen="allowfullscreen" allow="fullscreen">
         </iframe>
     </div>
-
-
 
     <script src="./JS/slider.js"></script>
 </body>
