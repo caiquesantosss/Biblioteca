@@ -11,11 +11,20 @@ CREATE TABLE IF NOT EXISTS usuario (
     nivel INT NOT NULL DEFAULT 0
 );
 
+<<<<<<< HEAD
+=======
+select * from usuario;
+
+>>>>>>> 8e00acbe22c364231e0a56bdaa6e37f211bd04d0
 CREATE TABLE IF NOT EXISTS livros (
     id_livro INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(255) NOT NULL,
     autores TEXT NOT NULL,
+<<<<<<< HEAD
     preco int NOT NULL,
+=======
+    preco DECIMAL(10, 2) NOT NULL,
+>>>>>>> 8e00acbe22c364231e0a56bdaa6e37f211bd04d0
     capa VARCHAR(200) DEFAULT "../imgs/default/sem_capa.jpg",
     categoria_id INT,
     FOREIGN KEY (categoria_id) REFERENCES categoria(id_categoria)
@@ -43,6 +52,7 @@ data_publicacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
 );
 
+<<<<<<< HEAD
 INSERT INTO livros (titulo, autores, preco, capa, categoria_id) VALUES
     ('Duna', 'Frank Herbert', 299, '../imgs/books/livro_1.jpg', 1),
     ('A Batalha do Labirinto', 'Rick Riordan', 209, '../imgs/books/livro_10.jpg', 1),
@@ -59,6 +69,31 @@ INSERT INTO livros (titulo, autores, preco, capa, categoria_id) VALUES
     ('A Mão Esquerda da Escuridão', 'Ursula K. Le Guin', 239, '../imgs/books/livro_6.jpg', 1),
     ('Fahrenheit 451', 'Ray Bradbury', 219, '../imgs/books/livro_7.jpg', 1),
     ('Fundação e Império', 'Isaac Asimov', 359, '../imgs/books/livro_9.jpg', 1);
+=======
+select * from mensagens;
+select * from usuario;
+select * from livros;
+
+delete from mensagens where id_mensagem > 0;
+
+INSERT INTO livros (titulo, autores, preco, capa, categoria_id) VALUES
+    ('Duna', 'Frank Herbert', 29.99, '../imgs/books/livro_1.jpg', 1),
+    ('A Batalha do Labirinto', 'Rick Riordan', 20.99, '../imgs/books/livro_10.jpg', 1),
+    ('O Código Da Vinci', 'Dan Brown', 24.99, '../imgs/books/livro_11.jpg', 2),
+    ('Os Homens que Não Amavam as Mulheres', 'Stieg Larsson', 26.99, '../imgs/books/livro_12.jpg', 2),
+    ('Sherlock Holmes', 'Arthur Conan Doyle', 18.99, '../imgs/books/livro_13.jpg', 2),
+    ('Harry Potter e a Saga Inteira', 'J.K. Rowling', 99.99, '../imgs/books/livro_25.jpg', 1),
+    ('O Poder do Agora', 'Eckhart Tolle', 21.99, '../imgs/books/livro_18.jpg', 5),  
+    ('Tolkien', 'Autor Desconhecido', 29.99, '../imgs/books/livro_2.jpg', 1),
+    ('O Pintassilgo', 'Donna Tartt', 29.99, '../imgs/books/livro_20.jpg', 1),
+    ('Neuromancer', 'William Gibson', 22.99, '../imgs/books/livro_3.jpg', 1),
+    ('O Guia do Mochileiro das Galáxias', 'Douglas Adams', 19.99, '../imgs/books/livro_4.jpg', 1),
+    ('Cem Anos de Solidão', 'Gabriel García Márquez', 27.99, '../imgs/books/livro_5.jpg', 1),
+    ('A Mão Esquerda da Escuridão', 'Ursula K. Le Guin', 23.99, '../imgs/books/livro_6.jpg', 1),
+    ('Fahrenheit 451', 'Ray Bradbury', 21.99, '../imgs/books/livro_7.jpg', 1),
+    ('Fundação e Império', 'Isaac Asimov', 35.99, '../imgs/books/livro_9.jpg', 1);
+
+>>>>>>> 8e00acbe22c364231e0a56bdaa6e37f211bd04d0
 
 CREATE TABLE carrinho_compras (
     id_carrinho INT PRIMARY KEY AUTO_INCREMENT,
@@ -82,6 +117,7 @@ CREATE TABLE IF NOT EXISTS compras (
     FOREIGN KEY (id_livro) REFERENCES livros(id_livro)
 );
 
+<<<<<<< HEAD
 
 
 select * from carrinho_compras;
@@ -89,3 +125,8 @@ select * from carrinho_compras;
 select * from compras;
 
 select * from usuario;
+=======
+select * from carrinho_compras;
+
+select * from compras;
+>>>>>>> 8e00acbe22c364231e0a56bdaa6e37f211bd04d0
